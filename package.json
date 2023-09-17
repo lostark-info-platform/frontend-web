@@ -7,13 +7,16 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-    "lint-staged": "lint-staged"
+		"lint-staged": "lint-staged"
 	},
-  "lint-staged": {
-    "src/**": [
-      "eslint"
-    ]
-  },
+	"lint-staged": {
+		"src/**": [
+			"eslint"
+		]
+	},
+	"engines": {
+		"node": ">=16.15.0"
+	},
 	"dependencies": {
 		"@types/node": "20.6.2",
 		"@types/react": "18.2.21",
