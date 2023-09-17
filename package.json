@@ -6,8 +6,14 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+    "lint-staged": "lint-staged"
 	},
+  "lint-staged": {
+    "src/**": [
+      "eslint"
+    ]
+  },
 	"dependencies": {
 		"@types/node": "20.6.2",
 		"@types/react": "18.2.21",
