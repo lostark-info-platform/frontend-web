@@ -1,22 +1,42 @@
 {
-  "name": "frontend-web",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@types/node": "20.6.2",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
-    "eslint": "8.49.0",
-    "eslint-config-next": "13.4.19",
-    "next": "13.4.19",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "typescript": "5.2.2"
-  }
+	"name": "frontend-web",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"lint-staged": "lint-staged"
+	},
+	"lint-staged": {
+		"src/**": [
+			"eslint"
+		]
+	},
+	"engines": {
+		"node": ">=16.15.0",
+		"npm": "npm 대신 yarn을 사용해주세요"
+	},
+	"dependencies": {
+		"@types/node": "20.6.2",
+		"@types/react": "18.2.21",
+		"@types/react-dom": "18.2.7",
+		"eslint": "^8.49.0",
+		"eslint-config-next": "13.4.19",
+		"next": "13.4.19",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"typescript": "5.2.2"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^6.7.0",
+		"@typescript-eslint/parser": "^6.7.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-prettier": "^5.0.0",
+		"eslint-plugin-react": "^7.33.2",
+		"husky": "^8.0.3",
+		"lint-staged": "^14.0.1",
+		"prettier": "3.0.3"
+	}
 }
