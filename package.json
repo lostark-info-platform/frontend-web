@@ -15,7 +15,8 @@
 		]
 	},
 	"engines": {
-		"node": ">=16.15.0"
+		"node": ">=16.15.0",
+		"npm": "npm 대신 yarn을 사용해주세요"
 	},
 	"dependencies": {
 		"@types/node": "20.6.2",
