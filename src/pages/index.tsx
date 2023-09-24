@@ -1,8 +1,8 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const TestStyled = styled.button`
-  font-size:45px;
-`
+	font-size: 45px;
+`;
 
 export default function Home() {
 	function esLintTest() {
