@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from 'styled-components';
+import { css } from 'styled-components';
 
 const resetCss = css`
 	/* http://meyerweb.com/eric/tools/css/reset/ 
@@ -132,8 +132,4 @@ const resetCss = css`
 	}
 `;
 
-const GlobalStyles = createGlobalStyle`
-  ${resetCss}
-`;
-
-export default GlobalStyles;
+export default resetCss;
