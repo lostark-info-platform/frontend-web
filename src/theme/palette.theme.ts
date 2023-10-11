@@ -1,6 +1,8 @@
-import { buildCssVariables, cssVar } from './utils';
+import { buildCssVariables, cssVar } from './utils/css.util';
 
-export type ThemePaletteMode = 'light' | 'dark';
+/**
+ * @description 팔레트를 추가하거나 수정하려면 아래를 설정해주세요.
+ */
 
 type ThemePalette = {
 	background: string;
@@ -9,11 +11,7 @@ type ThemePalette = {
 	secondary: string;
 	body: string;
 };
-type ThemePaletteKey = keyof ThemePalette;
 
-/**
- * @description 팔레트를 추가하거나 수정하려면 아래를 설정해주세요.
- */
 const themePaletteSets: Record<ThemePaletteMode, ThemePalette> = {
 	light: {
 		background: '#FFFFFF',
@@ -30,6 +28,10 @@ const themePaletteSets: Record<ThemePaletteMode, ThemePalette> = {
 		body: '#FAFAFA',
 	},
 };
+
+export type ThemePaletteMode = 'light' | 'dark';
+
+type ThemePaletteKey = keyof ThemePalette;
 
 const themePaletteSetsKeys = Object.keys(
 	themePaletteSets.light
