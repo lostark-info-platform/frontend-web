@@ -8,7 +8,11 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:react/recommended',
+		'plugin:storybook/recommended',
 	],
+	settings: {
+		'mdx/code-blocks': true,
+	},
 	overrides: [
 		{
 			env: {
@@ -19,14 +23,27 @@ module.exports = {
 				sourceType: 'script',
 			},
 		},
+		/*
+		 * @description eslint mdx
+		 * https://github.com/mdx-js/eslint-mdx/issues/230
+		 */
+		{
+			files: '*.mdx',
+			extends: 'plugin:mdx/recommended',
+		},
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
+		ecmaFeatures: {
+			jsx: true,
+		},
 	},
-	plugins: ['@typescript-eslint', 'react'],
+	plugins: ['@typescript-eslint', 'react', 'prettier'],
 	rules: {
 		'react/react-in-jsx-scope': 'off',
+		'no-var': 'error',
+		'prefer-const': 'error',
 	},
 };
