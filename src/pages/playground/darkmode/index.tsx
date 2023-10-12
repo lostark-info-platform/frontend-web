@@ -7,14 +7,6 @@ const DarkmodePage = () => {
 	return (
 		<Wrapper>
 			<Toggle />
-			{/* <Toggle
-				className={classNames({
-					on: theme === 'dark',
-				})}
-				onClick={() => {
-					toggle();
-				}}
-			/> */}
 			<Title>아리아 도서 이플</Title>
 			<Text>
 				아리아 도서 이플 비나리 컴퓨터 늘품 책방 별하 그루잠 나래 안녕
