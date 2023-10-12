@@ -8,6 +8,8 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:react/recommended',
+		'plugin:storybook/recommended',
+		'plugin:mdx/recommended',
 	],
 	overrides: [
 		{
@@ -24,8 +26,11 @@ module.exports = {
 	parserOptions: {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
+		ecmaFeatures: {
+			jsx: true,
+		},
 	},
-	plugins: ['@typescript-eslint', 'react'],
+	plugins: ['@typescript-eslint', 'react', 'prettier'],
 	rules: {
 		'react/react-in-jsx-scope': 'off',
 	},
