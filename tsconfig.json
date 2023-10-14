@@ -14,6 +14,9 @@
 		"jsx": "preserve",
 		"incremental": true,
 		"paths": {
+			// INFO: react typescript error issue
+			// https://remarkablemark.org/blog/2023/06/30/react-types-reactnode-error/
+			"react": ["./node_modules/@types/react"],
 			"@/*": ["./src/*"]
 		}
 	},
