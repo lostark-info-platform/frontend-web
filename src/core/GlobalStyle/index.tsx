@@ -3,10 +3,10 @@ import resetCss from './reset.css';
 import themeCss from './theme.css';
 import normalizeCss from './normalize.css';
 
-const GlobalStyles = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   ${resetCss}
   ${themeCss}
   ${normalizeCss}
 `;
 
-export default GlobalStyles;
+export default GlobalStyle;

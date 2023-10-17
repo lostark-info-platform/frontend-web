@@ -1,9 +1,9 @@
-import { ThemePaletteMode } from '@/theme/palette.theme';
+import { ThemeMode } from '@/theme/sementicColor.theme';
 import { DefaultValue, atom, selector } from 'recoil';
 
 export type DarkModeState = {
-	theme: ThemePaletteMode | 'default';
-	systemTheme: ThemePaletteMode | 'not-ready';
+	theme: ThemeMode | 'default';
+	systemTheme: ThemeMode | 'not-ready';
 };
 
 const initialState: DarkModeState = {

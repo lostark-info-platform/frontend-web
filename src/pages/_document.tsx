@@ -1,3 +1,4 @@
+import { ThemeMode } from '@/theme/sementicColor.theme';
 import Document, {
 	Html,
 	Head,
@@ -7,7 +8,11 @@ import Document, {
 } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-class MyDocument extends Document {
+type Props = {
+	themeMode: ThemeMode | null;
+};
+
+class MyDocument extends Document<Props> {
 	static async getInitialProps(ctx: DocumentContext) {
 		const sheet = new ServerStyleSheet();
 		const originalRenderPage = ctx.renderPage;
@@ -20,6 +25,7 @@ class MyDocument extends Document {
 				});
 
 			const initialProps = await Document.getInitialProps(ctx);
+
 			return {
 				...initialProps,
 				styles: [initialProps.styles, sheet.getStyleElement()],
@@ -30,10 +36,16 @@ class MyDocument extends Document {
 	}
 
 	render() {
+		const pageProps = this.props?.__NEXT_DATA__?.props?.pageProps as {
+			themeMode: ThemeMode | null;
+		};
+		const themeMode = pageProps.themeMode;
+		const bodyProps = themeMode ? { 'data-theme': themeMode } : {};
+
 		return (
-			<Html lang='en'>
+			<Html lang='ko'>
 				<Head />
-				<body>
+				<body {...bodyProps}>
 					<Main />
 					<NextScript />
 				</body>

@@ -1,6 +1,6 @@
 import localStorage from '@/storage/localStorage';
 import useTheme from '../useTheme';
-import { ThemePaletteMode } from '@/theme/palette.theme';
+import { ThemeMode } from '@/theme/sementicColor.theme';
 import cookie from '@/storage/cookie';
 import { useSetRecoilState } from 'recoil';
 import { darkModeThemeSelector } from '@/recoil/common/darkMode';
@@ -12,7 +12,7 @@ const useToggleTheme = () => {
 	const theme = useTheme();
 	const setDarkModeTheme = useSetRecoilState(darkModeThemeSelector);
 
-	const save = (value: ThemePaletteMode) => {
+	const save = (value: ThemeMode) => {
 		localStorage.setItem('theme', value); // CSR
 		cookie.setItem('theme', value); // SSR
 	};
