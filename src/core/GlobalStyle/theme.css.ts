@@ -1,5 +1,7 @@
-import { themePalette, themePaletteSetsWithMode } from '@/theme/palette.theme';
 import { css } from 'styled-components';
+import themeSementicColor, {
+	sementicColorWithMode,
+} from '@/theme/sementicColor.theme';
 
 const themeCss = css`
 	body {
@@ -7,29 +9,29 @@ const themeCss = css`
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		box-sizing: border-box;
-		line-height: 1.2;
+		line-height: 1.5;
 
 		/* TODO: 기본 텍스트 색상을 설정해주세요. */
-		color: ${themePalette.body};
-		background: ${themePalette.background};
+		background: ${themeSementicColor.background};
+		color: ${themeSementicColor.primary};
 	}
 
 	body {
-		${themePaletteSetsWithMode.light};
+		${sementicColorWithMode.light};
 	}
 
 	@media (prefers-color-scheme: dark) {
 		body {
-			${themePaletteSetsWithMode.dark};
+			${sementicColorWithMode.dark};
 		}
 	}
 
 	body[data-theme='light'] {
-		${themePaletteSetsWithMode.light};
+		${sementicColorWithMode.light};
 	}
 
-	body {
-		${themePaletteSetsWithMode.dark};
+	body[data-theme='dark'] {
+		${sementicColorWithMode.dark};
 	}
 `;
 

@@ -15,9 +15,22 @@ const useThemeEffect = () => {
 	const theme = useRecoilValue(darkModeThemeSelector);
 
 	useEffect(() => {
-		const systemPrefersDark = window.matchMedia(
+		const systemPrefersMatchMedia = window.matchMedia(
 			'(prefers-color-scheme: dark)'
-		).matches;
+		);
+
+		const systemPrefersDark = systemPrefersMatchMedia.matches;
+
+		systemPrefersMatchMedia.addEventListener(
+			'change',
+			({ matches: darkMode }) => {
+				if (darkMode) {
+					setDarkModeSystemTheme('dark');
+				} else {
+					setDarkModeSystemTheme('light');
+				}
+			}
+		);
 
 		setDarkModeSystemTheme(systemPrefersDark ? 'dark' : 'light');
 	}, []);

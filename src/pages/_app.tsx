@@ -1,37 +1,50 @@
-import useThemeEffect from '@/hooks/common/useThemeEffect';
-import { darkModeThemeSelector } from '@/recoil/common/darkMode';
-import GlobalStyles from '@/styles/Global';
-import type { AppProps } from 'next/app';
-import { useEffect } from 'react';
-import { RecoilRoot, useSetRecoilState } from 'recoil';
-
+import GlobalStyle from '@/core/GlobalStyle';
+import type { AppContext, AppProps } from 'next/app';
 import '@/recoil/config';
 
-export default function App({ Component, pageProps }: AppProps) {
+import { RecoilRoot } from 'recoil';
+import { extractFromCookie } from '@/theme/utils/cookie.util';
+import { ThemeMode } from '@/theme/sementicColor.theme';
+import {
+	darkModeSystemThemeSelector,
+	darkModeThemeSelector,
+} from '@/recoil/common/darkMode';
+import LoadTheme from '@/core/LoadTheme';
+
+type Props = {
+	themeMode: ThemeMode | null;
+};
+export default function App({ Component, pageProps }: AppProps<Props>) {
+	const themeMode = pageProps.themeMode;
+
 	return (
-		<RecoilRoot>
-			<GlobalStyles />
+		<RecoilRoot
+			initializeState={({ set }) => {
+				if (!themeMode) return;
+				set(darkModeThemeSelector, themeMode);
+				set(darkModeSystemThemeSelector, themeMode);
+			}}
+		>
+			<GlobalStyle />
 			<LoadTheme />
 			<Component {...pageProps} />
 		</RecoilRoot>
 	);
 }
 
-const LoadTheme = () => {
-	const setDarkModeTheme = useSetRecoilState(darkModeThemeSelector);
+App.getInitialProps = async ({ Component, ctx }: AppContext) => {
+	let pageProps = {};
+	if (Component.getInitialProps) {
+		pageProps = await Component.getInitialProps(ctx);
+	}
 
-	useThemeEffect();
+	const themeMode = extractFromCookie(ctx.req?.headers.cookie, 'theme');
 
-	useEffect(() => {
-		const theme = localStorage.getItem('theme');
-		if (!theme) return;
-		if (theme === 'dark') {
-			setDarkModeTheme('dark');
-		} else {
-			setDarkModeTheme('light');
-		}
-		document.body.dataset.theme = theme;
-	}, []);
-
-	return <></>;
+	pageProps = {
+		...pageProps,
+		themeMode,
+	};
+	return {
+		pageProps,
+	};
 };
