@@ -1,34 +1,51 @@
+import { ThemeMode } from '@/theme/sementicColor.theme';
 import Document, {
 	Html,
 	Head,
 	Main,
 	NextScript,
 	DocumentContext,
-	DocumentInitialProps,
 } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
 
-class MyDocument extends Document {
-	static async getInitialProps(
-		ctx: DocumentContext
-	): Promise<DocumentInitialProps> {
+type Props = {
+	themeMode: ThemeMode | null;
+};
+
+class MyDocument extends Document<Props> {
+	static async getInitialProps(ctx: DocumentContext) {
+		const sheet = new ServerStyleSheet();
 		const originalRenderPage = ctx.renderPage;
 
-		ctx.renderPage = () =>
-			originalRenderPage({
-				enhanceApp: (App) => App,
-				enhanceComponent: (Component) => Component,
-			});
+		try {
+			ctx.renderPage = () =>
+				originalRenderPage({
+					enhanceApp: (App) => (props) =>
+						sheet.collectStyles(<App {...props} />),
+				});
 
-		const initialProps = await Document.getInitialProps(ctx);
+			const initialProps = await Document.getInitialProps(ctx);
 
-		return initialProps;
+			return {
+				...initialProps,
+				styles: [initialProps.styles, sheet.getStyleElement()],
+			};
+		} finally {
+			sheet.seal();
+		}
 	}
 
 	render() {
+		const pageProps = this.props?.__NEXT_DATA__?.props?.pageProps as {
+			themeMode: ThemeMode | null;
+		};
+		const themeMode = pageProps.themeMode;
+		const bodyProps = themeMode ? { 'data-theme': themeMode } : {};
+
 		return (
-			<Html lang='en'>
+			<Html lang='ko'>
 				<Head />
-				<body>
+				<body {...bodyProps}>
 					<Main />
 					<NextScript />
 				</body>
