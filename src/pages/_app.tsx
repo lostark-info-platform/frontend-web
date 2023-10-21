@@ -1,4 +1,3 @@
-import GlobalStyle from '@/core/GlobalStyle';
 import type { AppContext, AppProps } from 'next/app';
 import '@/recoil/config';
 
@@ -9,7 +8,8 @@ import {
 	darkModeSystemThemeSelector,
 	darkModeThemeSelector,
 } from '@/recoil/common/darkMode';
-import LoadTheme from '@/core/LoadTheme';
+import GlobalStyle from '@/theme/initialize/GlobalStyle';
+import LoadTheme from '@/theme/initialize/LoadTheme';
 
 type Props = {
 	themeMode: ThemeMode | null;
@@ -40,11 +40,10 @@ App.getInitialProps = async ({ Component, ctx }: AppContext) => {
 
 	const themeMode = extractFromCookie(ctx.req?.headers.cookie, 'theme');
 
-	pageProps = {
-		...pageProps,
-		themeMode,
-	};
 	return {
-		pageProps,
+		pageProps: {
+			...pageProps,
+			themeMode,
+		},
 	};
 };
