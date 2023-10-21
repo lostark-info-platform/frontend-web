@@ -8,12 +8,13 @@
 		"start": "next start",
 		"lint": "next lint",
 		"lint-staged": "lint-staged",
+		"check-types": "tsc --noEmit",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"
 	},
 	"lint-staged": {
-		"src/**": [
-			"eslint"
+		"*.{ts,tsx}": [
+			"eslint --fix"
 		]
 	},
 	"engines": {

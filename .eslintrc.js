@@ -4,6 +4,8 @@ module.exports = {
 		es2021: true,
 		node: true,
 	},
+	parser: '@typescript-eslint/parser',
+	plugins: ['@typescript-eslint', 'react', 'prettier'],
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
@@ -20,7 +22,6 @@ module.exports = {
 			extends: 'plugin:mdx/recommended',
 		},
 	],
-	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
@@ -28,7 +29,11 @@ module.exports = {
 			jsx: true,
 		},
 	},
-	plugins: ['@typescript-eslint', 'react', 'prettier'],
+	settings: {
+		react: {
+			version: 'detect',
+		},
+	},
 	rules: {
 		'prefer-const': 'error',
 		'react/react-in-jsx-scope': 'off',
