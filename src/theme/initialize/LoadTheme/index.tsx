@@ -1,5 +1,4 @@
 import useThemeEffect from '@/hooks/common/useThemeEffect';
-
 function LoadTheme() {
 	useThemeEffect();
 	return null;
