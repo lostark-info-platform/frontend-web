@@ -1,4 +1,4 @@
-import ApiService from './modules/ApiService';
+import ApiService from './ApiService';
 
 const api = new ApiService();
 

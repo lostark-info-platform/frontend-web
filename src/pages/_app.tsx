@@ -8,8 +8,8 @@ import {
 	darkModeSystemThemeSelector,
 	darkModeThemeSelector,
 } from '@/recoil/common/darkMode';
-import GlobalStyle from '@/theme/initialize/GlobalStyle';
-import LoadTheme from '@/theme/initialize/LoadTheme';
+import GlobalStyle from '@/theme/initializeComponents/GlobalStyle';
+import LoadTheme from '@/theme/initializeComponents/LoadTheme';
 import {
 	HydrationBoundary,
 	QueryClient,
@@ -31,6 +31,7 @@ export default function App({ Component, pageProps }: AppProps<Props>) {
 				defaultOptions: {
 					queries: {
 						staleTime: Infinity,
+						retry: 1,
 					},
 				},
 			})
