@@ -10,37 +10,57 @@ import {
 } from '@/recoil/common/darkMode';
 import GlobalStyle from '@/theme/initialize/GlobalStyle';
 import LoadTheme from '@/theme/initialize/LoadTheme';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+	HydrationBoundary,
+	QueryClient,
+	QueryClientProvider,
+} from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ErrorBoundary from '@/components/common/ErrorBoundary';
+import { useState } from 'react';
 
 type Props = {
 	themeMode: ThemeMode | null;
+	dehydratedState: unknown;
 };
 
-const queryClient = new QueryClient();
-
 export default function App({ Component, pageProps }: AppProps<Props>) {
-	const themeMode = pageProps.themeMode;
+	const [queryClient] = useState(
+		() =>
+			new QueryClient({
+				defaultOptions: {
+					queries: {
+						staleTime: Infinity,
+					},
+				},
+			})
+	);
 
 	return (
 		<ErrorBoundary>
 			<QueryClientProvider client={queryClient}>
-				<RecoilRoot
-					initializeState={({ set }) => {
-						if (!themeMode) return;
-						set(darkModeThemeSelector, themeMode);
-						set(darkModeSystemThemeSelector, themeMode);
-					}}
-				>
-					<GlobalStyle />
-					<LoadTheme />
-					<Component {...pageProps} />
-				</RecoilRoot>
-				<ReactQueryDevtools
-					initialIsOpen={false}
-					buttonPosition='bottom-left'
-				/>
+				<HydrationBoundary state={pageProps.dehydratedState}>
+					<RecoilRoot
+						initializeState={({ set }) => {
+							initialRecoilStateForThemeMode();
+
+							function initialRecoilStateForThemeMode() {
+								const themeMode = pageProps.themeMode;
+								if (!themeMode) return;
+								set(darkModeThemeSelector, themeMode);
+								set(darkModeSystemThemeSelector, themeMode);
+							}
+						}}
+					>
+						<GlobalStyle />
+						<LoadTheme />
+						<Component {...pageProps} />
+					</RecoilRoot>
+					<ReactQueryDevtools
+						initialIsOpen={false}
+						buttonPosition='bottom-left'
+					/>
+				</HydrationBoundary>
 			</QueryClientProvider>
 		</ErrorBoundary>
 	);
