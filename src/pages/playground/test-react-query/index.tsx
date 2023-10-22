@@ -3,13 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 
 // https://stackoverflow.com/questions/76961108/react-query-onsuccess-onerror-onsettled-are-deprecated-what-should-i-use-ins
 function PlaygroundTestReactQueryPage() {
-	const { data } = useQuery({
+	useQuery({
 		queryKey: ['users', 'me'],
-		queryFn: api.getUsersMe,
-		// throwOnError: true,
-		meta: {},
+		queryFn: () => api.getUsersMe(),
+		throwOnError: true,
+		retry: 1,
 	});
-	return <>{data}</>;
+
+	return <>{1}</>;
 }
 
 export default PlaygroundTestReactQueryPage;

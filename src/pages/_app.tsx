@@ -12,6 +12,7 @@ import GlobalStyle from '@/theme/initialize/GlobalStyle';
 import LoadTheme from '@/theme/initialize/LoadTheme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import ErrorBoundary from '@/components/common/ErrorBoundary';
 
 type Props = {
 	themeMode: ThemeMode | null;
@@ -23,23 +24,25 @@ export default function App({ Component, pageProps }: AppProps<Props>) {
 	const themeMode = pageProps.themeMode;
 
 	return (
-		<QueryClientProvider client={queryClient}>
-			<RecoilRoot
-				initializeState={({ set }) => {
-					if (!themeMode) return;
-					set(darkModeThemeSelector, themeMode);
-					set(darkModeSystemThemeSelector, themeMode);
-				}}
-			>
-				<GlobalStyle />
-				<LoadTheme />
-				<Component {...pageProps} />
-			</RecoilRoot>
-			<ReactQueryDevtools
-				initialIsOpen={false}
-				buttonPosition='bottom-left'
-			/>
-		</QueryClientProvider>
+		<ErrorBoundary>
+			<QueryClientProvider client={queryClient}>
+				<RecoilRoot
+					initializeState={({ set }) => {
+						if (!themeMode) return;
+						set(darkModeThemeSelector, themeMode);
+						set(darkModeSystemThemeSelector, themeMode);
+					}}
+				>
+					<GlobalStyle />
+					<LoadTheme />
+					<Component {...pageProps} />
+				</RecoilRoot>
+				<ReactQueryDevtools
+					initialIsOpen={false}
+					buttonPosition='bottom-left'
+				/>
+			</QueryClientProvider>
+		</ErrorBoundary>
 	);
 }
 

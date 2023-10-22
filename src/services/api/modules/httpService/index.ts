@@ -31,7 +31,7 @@ class HttpService {
 	/**
 	 * http service의 설정을 초기화합니다.
 	 */
-	public service() {
+	service() {
 		this.injectInterceptors();
 		return this;
 	}
