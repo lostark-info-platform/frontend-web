@@ -22,6 +22,8 @@
 		"npm": "npm 대신 yarn을 사용해주세요"
 	},
 	"dependencies": {
+		"@tanstack/react-query": "^5.0.0",
+		"@tanstack/react-query-devtools": "^5.0.3",
 		"@types/node": "20.6.2",
 		"@types/react": "18.2.21",
 		"@types/react-dom": "18.2.7",
@@ -47,6 +49,7 @@
 		"@storybook/nextjs": "^7.4.6",
 		"@storybook/react": "^7.4.6",
 		"@storybook/testing-library": "^0.2.2",
+		"@tanstack/eslint-plugin-query": "^5.0.0",
 		"@types/styled-components": "^5.1.28",
 		"@typescript-eslint/eslint-plugin": "^6.7.0",
 		"@typescript-eslint/parser": "^6.7.0",
