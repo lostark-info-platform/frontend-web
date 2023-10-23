@@ -1,15 +1,11 @@
+import useTestReactQuery from '@/hooks/testReactQuery/useTestReactQuery';
 import api from '@/services/api';
 import testReactQueryKeys from '@/services/queryKeys/testReactQuery';
-import { QueryClient, dehydrate, useQuery } from '@tanstack/react-query';
-
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 // https://stackoverflow.com/questions/76961108/react-query-onsuccess-onerror-onsettled-are-deprecated-what-should-i-use-ins
 function PlaygroundTestReactQueryPage() {
 	const id = '2';
-	const { data } = useQuery({
-		queryKey: testReactQueryKeys.testReactQuery({ id }),
-		queryFn: () => api.getTestReactQuery({ id }),
-		throwOnError: true,
-	});
+	const { data } = useTestReactQuery({ id });
 
 	return <>{data?.testReactQuery}</>;
 }
