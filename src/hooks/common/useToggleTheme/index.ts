@@ -1,7 +1,7 @@
-import localStorage from '@/storage/localStorage';
+import localStorage from '@/services/localStorage';
 import useTheme from '../useTheme';
 import { ThemeMode } from '@/theme/sementicColor.theme';
-import cookie from '@/storage/cookie';
+import cookie from '@/services/cookie';
 import { useSetRecoilState } from 'recoil';
 import { darkModeThemeSelector } from '@/recoil/common/darkMode';
 

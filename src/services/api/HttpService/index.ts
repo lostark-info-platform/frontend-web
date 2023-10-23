@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import getConfig from 'next/config';
-import cookie from '@/storage/cookie';
-import type { HttpServiceMethods, HttpServiceParams } from './httpService.type';
+import cookie from '@/services/cookie';
+import type { HttpServiceMethods, HttpServiceParams } from './HttpService.type';
 
 /**
  * API 비동기 호출 Http 모듈
@@ -31,7 +31,7 @@ class HttpService {
 	/**
 	 * http service의 설정을 초기화합니다.
 	 */
-	public service() {
+	service() {
 		this.injectInterceptors();
 		return this;
 	}
