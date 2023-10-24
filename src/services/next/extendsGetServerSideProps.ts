@@ -1,30 +1,46 @@
+import { DehydratedState, QueryClient, dehydrate } from '@tanstack/react-query';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-
-type Options = {
-	temp: boolean;
-};
+import ServerSideError from './serverSideError';
 
 type InjectedProps = {
-	userLocation: string;
+	queryClient: QueryClient;
+	dehydrate: typeof dehydrate;
 };
 
-type GetServerSidePropsWithInjectedProps = GetServerSidePropsContext &
-	InjectedProps;
+type GetServerSideInjectedProps = {
+	context: GetServerSidePropsContext;
+} & InjectedProps;
+
+type ReturnProps = {
+	dehydratedState?: DehydratedState;
+};
 
 type Callback = (
-	context: GetServerSidePropsWithInjectedProps
-) => Promise<GetServerSidePropsResult<any>>;
+	context: GetServerSideInjectedProps
+) => Promise<GetServerSidePropsResult<ReturnProps>>;
 
-const extendsGetServerSideProps = (cb: Callback, options: Options) => {
-	return async (ctx: GetServerSidePropsWithInjectedProps) => {
-		console.log('options: ', options);
+const extendsGetServerSideProps = (callback: Callback) => {
+	return async (context: GetServerSidePropsContext) => {
 		try {
-			const injectedContext = {
-				...ctx,
+			const injectedProps = {
+				context,
+				queryClient: new QueryClient(),
+				dehydrate,
 			};
-			return cb?.(injectedContext) || {};
+
+			return (await callback?.(injectedProps)) || {};
 		} catch (error) {
-			console.error(error);
+			if (error instanceof ServerSideError) {
+				const errorInfo = error.getErrorInfo();
+				console.log('errorInfo: ', errorInfo);
+				if (errorInfo) {
+					return errorInfo.serverSideResult;
+				}
+			}
+
+			return {
+				props: {},
+			};
 		}
 	};
 };
