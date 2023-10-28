@@ -21,6 +21,9 @@
 		"node": ">=16.15.0",
 		"npm": "npm 대신 yarn을 사용해주세요"
 	},
+	"resolutions": {
+		"jackspeak": "2.1.1"
+	},
 	"dependencies": {
 		"@tanstack/react-query": "^5.0.0",
 		"@tanstack/react-query-devtools": "^5.0.3",
@@ -28,7 +31,6 @@
 		"@types/react": "18.2.21",
 		"@types/react-dom": "18.2.7",
 		"axios": "^1.5.1",
-		"babel-plugin-styled-components": "^2.1.4",
 		"classnames": "^2.3.2",
 		"cookies-next": "^4.0.0",
 		"eslint": "^8.49.0",
