@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { AppContext, AppProps } from 'next/app';
 import '@/recoil/config';
 
@@ -9,7 +10,7 @@ import {
 	darkModeThemeSelector,
 } from '@/recoil/common/darkMode';
 import GlobalStyle from '@/theme/initializeComponents/GlobalStyle';
-import LoadTheme from '@/theme/initializeComponents/LoadTheme';
+import LoadThemeDarkMode from '@/theme/initializeComponents/LoadThemeDarkMode';
 import {
 	HydrationBoundary,
 	QueryClient,
@@ -17,14 +18,13 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ErrorBoundary from '@/components/common/ErrorBoundary';
-import { useState } from 'react';
 
-type Props = {
+type AppRootProps = {
 	themeMode: ThemeMode | null;
 	dehydratedState: unknown;
 };
 
-export default function App({ Component, pageProps }: AppProps<Props>) {
+export default function App({ Component, pageProps }: AppProps<AppRootProps>) {
 	const [queryClient] = useState(
 		() =>
 			new QueryClient({
@@ -54,7 +54,7 @@ export default function App({ Component, pageProps }: AppProps<Props>) {
 						}}
 					>
 						<GlobalStyle />
-						<LoadTheme />
+						<LoadThemeDarkMode />
 						<Component {...pageProps} />
 					</RecoilRoot>
 					<ReactQueryDevtools

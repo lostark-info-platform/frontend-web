@@ -1,7 +1,7 @@
 import useThemeEffect from '@/hooks/common/useThemeEffect';
-function LoadTheme() {
+function LoadThemeDarkMode() {
 	useThemeEffect();
 	return null;
 }
 
-export default LoadTheme;
+export default LoadThemeDarkMode;
