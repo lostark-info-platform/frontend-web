@@ -4,7 +4,5 @@ export type ThemeTypography = typeof themeTypography;
 export type ThemeTypographyVariantMap<V extends keyof ThemeTypography> =
 	ThemeTypography[V];
 
-export type ThemeTypogrpahyVariantSizeMap<V extends keyof ThemeTypography> = {
-	/** 타이포그래피 variant의 사이즈 */
-	size: keyof ThemeTypographyVariantMap<V>;
-};
+export type ThemeTypogrpahyVariantSizeMap<V extends keyof ThemeTypography> =
+	keyof ThemeTypographyVariantMap<V>;

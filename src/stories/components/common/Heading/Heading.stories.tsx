@@ -1,7 +1,7 @@
 import Heading from '@/components/common/Heading';
+import StorybookStack from '@/stories/storybookHelpers/components/StorybookStack';
 import themeTypography from '@/theme/typography.theme';
 import { Meta, StoryFn } from '@storybook/react';
-import styled from 'styled-components';
 
 const meta = {
 	title: 'Design System/Components/common/Heading',
@@ -12,7 +12,7 @@ export default meta;
 
 export const Basics: StoryFn = () => {
 	return (
-		<Stack>
+		<StorybookStack direction='column' gap='20px'>
 			{Object.keys(themeTypography['heading'])
 				.map((value) => Number(value))
 				.sort((a, b) => b - a)
@@ -25,12 +25,14 @@ export const Basics: StoryFn = () => {
 						</Heading>
 					);
 				})}
-		</Stack>
+		</StorybookStack>
 	);
 };
 
-const Stack = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-`;
+export const Color = () => {
+	return (
+		<Heading color='semanticColor.secondary' size={36}>
+			color
+		</Heading>
+	);
+};

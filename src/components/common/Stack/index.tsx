@@ -38,7 +38,7 @@ type StackProps = {
 	alignItems?: StackAlignItemsVariant;
 };
 
-const marginMap = {
+const stackDirectionForMarginMap = {
 	row: 'margin-left',
 	'row-reverse': 'margin-right',
 	column: 'margin-top',
@@ -54,10 +54,10 @@ const Stack = styled.div<StackProps>`
 			if (margin) {
 				return css`
 					& > :not(style):not(style) {
-						${marginMap[direction]}: 0;
+						${stackDirectionForMarginMap[direction]}: 0;
 					}
 					& > :not(style) ~ :not(style) {
-						${marginMap[direction]}: ${margin};
+						${stackDirectionForMarginMap[direction]}: ${margin};
 					}
 				`;
 			}

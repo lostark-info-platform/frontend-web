@@ -1,5 +1,5 @@
 import theme from './constants/theme.constant';
-import { buildCssVariables, cssVar } from './utils/css.util';
+import { buildCssVariables, cssVar } from '../utils/common/css.util';
 
 const sementicColor = theme.semanticColor;
 type SementicColor = typeof sementicColor.light;

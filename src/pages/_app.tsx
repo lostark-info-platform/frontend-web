@@ -3,7 +3,7 @@ import type { AppContext, AppProps } from 'next/app';
 import '@/recoil/config';
 
 import { RecoilRoot } from 'recoil';
-import { extractFromCookie } from '@/theme/utils/cookie.util';
+import { extractFromCookie } from '@/utils/common/cookie.util';
 import { ThemeMode } from '@/theme/sementicColor.theme';
 import {
 	darkModeSystemThemeSelector,
