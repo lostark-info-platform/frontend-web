@@ -1,11 +1,9 @@
 import useTestReactQuery from '@/hooks/testReactQuery/useTestReactQuery';
-import api from '@/services/api';
 import extendsGetServerSideProps from '@/services/next/extendsGetServerSideProps';
 // import ServerSideError from '@/services/next/serverSideError';
-import testReactQueryKeys from '@/services/queryKeys/testReactQuery';
 
 const TestExtendsGetServerSidePropsPage = () => {
-	const { data } = useTestReactQuery({ id: '2' });
+	const { data } = useTestReactQuery({ id: '3' });
 	return <>{data?.testReactQuery}</>;
 };
 
@@ -13,11 +11,10 @@ export default TestExtendsGetServerSidePropsPage;
 
 export const getServerSideProps = extendsGetServerSideProps(
 	async ({ queryClient, dehydrate }) => {
-		const id = '2';
+		const id = '3';
 
 		await queryClient.prefetchQuery({
-			queryKey: testReactQueryKeys.testReactQuery({ id }),
-			queryFn: () => api.getTestReactQuery({ id }),
+			...useTestReactQuery.queryFactory(id),
 		});
 
 		// const serverSideError = new ServerSideError();
