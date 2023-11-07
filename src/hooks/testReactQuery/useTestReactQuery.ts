@@ -1,9 +1,9 @@
-import api from '@/services/api';
+import { apiService } from '@/services';
 import { useQuery } from '@tanstack/react-query';
 
 const testReactQueryFactory = (id: string) => ({
 	queryKey: ['testReactQuery', id],
-	queryFn: () => api.getTestReactQuery({ id }),
+	queryFn: () => apiService.getTestReactQuery({ id }),
 });
 
 const useTestReactQuery = ({ id }: { id: string }) => {

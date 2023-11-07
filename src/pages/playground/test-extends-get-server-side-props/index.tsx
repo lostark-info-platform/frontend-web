@@ -1,5 +1,5 @@
 import useTestReactQuery from '@/hooks/testReactQuery/useTestReactQuery';
-import extendsGetServerSideProps from '@/services/next/extendsGetServerSideProps';
+import extendsGetServerSideProps from '@/services/next/enhanceGetServerSideProps';
 // import ServerSideError from '@/services/next/serverSideError';
 
 const TestExtendsGetServerSidePropsPage = () => {
@@ -10,7 +10,7 @@ const TestExtendsGetServerSidePropsPage = () => {
 export default TestExtendsGetServerSidePropsPage;
 
 export const getServerSideProps = extendsGetServerSideProps(
-	async ({ queryClient, dehydrate }) => {
+	async ({ queryClient }) => {
 		const id = '3';
 
 		await queryClient.prefetchQuery({
@@ -22,11 +22,5 @@ export const getServerSideProps = extendsGetServerSideProps(
 		// throw serverSideError.redirect({
 		// 	destination: '/',
 		// });
-
-		return {
-			props: {
-				dehydratedState: dehydrate(queryClient),
-			},
-		};
 	}
 );

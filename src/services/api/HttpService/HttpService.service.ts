@@ -1,7 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import getConfig from 'next/config';
-import cookie from '@/services/cookie';
 import type { HttpServiceMethods, HttpServiceParams } from './HttpService.type';
+import { ResponseUsersRefresh } from '../dataModels/dataModels.types';
+import { cookieService, tokenService } from '@/services';
 
 /**
  * API 비동기 호출 Http 모듈
@@ -23,9 +24,9 @@ class HttpService {
 		});
 	}
 
-	private get getAuthorization() {
-		const accessToken = cookie.getItem('AccessToken') || '';
-		return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+	private getAuthorization() {
+		const token = tokenService.getToken();
+		return token ? { Authorization: `Bearer ${token}` } : {};
 	}
 
 	/**
@@ -44,7 +45,7 @@ class HttpService {
 			'Content-Type': hasAttachment
 				? 'multipart/form-data'
 				: 'application/json',
-			...this.getAuthorization,
+			...this.getAuthorization(),
 		};
 	}
 
@@ -89,18 +90,18 @@ class HttpService {
 		});
 	}
 
-	public async post<T, P>({
+	public async post<Response, Payload>({
 		url,
 		payload,
 		params,
 		hasAttachment = false,
 	}: {
 		url: string;
-		payload: P;
+		payload: Payload;
 		params?: HttpServiceParams;
 		hasAttachment?: boolean;
 	}) {
-		return this.request<T>({
+		return this.request<Response>({
 			method: 'POST',
 			url,
 			options: {
@@ -153,26 +154,84 @@ class HttpService {
 	}
 
 	private injectInterceptors() {
-		// Set up request interceptor
 		this.http.interceptors.request.use((request) => {
-			// * Perform an action
-			// TODO: implement an NProgress
 			return request;
 		});
 
-		// Set up response interceptor
 		this.http.interceptors.response.use(
 			(response) => {
-				// * Do something
+				const { config, data } = response;
+				const updateRefreshTokenCookieUrlList = [
+					'/api/users/login',
+					'/api/users/register',
+				];
+				const isUpdateRefreshTokenCookie =
+					config.method === 'post' &&
+					config.url &&
+					updateRefreshTokenCookieUrlList.some(
+						(url) => config.url === url
+					);
+
+				if (isUpdateRefreshTokenCookie) {
+					const { token, refreshToken: newRefreshToken } =
+						data.data as ResponseUsersRefresh;
+					cookieService.setItem('refreshToken', newRefreshToken);
+					tokenService.setToken(token);
+				}
+
 				return response;
 			},
 
-			(error) => {
+			async (error) => {
+				console.log('error: ', error);
 				// * Implement a global error alert
+
+				if (
+					error?.response?.status === 401 ||
+					error?.response?.status === 403
+				) {
+					if (typeof window !== 'undefined') {
+						window.location.href = '/playground/user/login';
+					}
+				}
 				return Promise.reject(error);
 			}
 		);
 	}
+
+	// private clearSilentRefresh = () => {
+	// 	if (this.silentRefreshTimeoutId) {
+	// 		clearInterval(this.silentRefreshTimeoutId);
+	// 		this.silentRefreshTimeoutId = null;
+	// 	}
+	// };
+
+	// private updateSilentRefresh = async () => {
+	// 	this.silentRefreshTimeoutId = setTimeout(
+	// 		async () => {
+	// 			const refreshToken = this.getRefreshToken();
+	// 			if (refreshToken) {
+	// 				const responseRefreshData = await this.service().post<
+	// 					CommonApiResponse<ResponseUsersRefresh>,
+	// 					RequestUsersRefresh
+	// 				>({
+	// 					url: '/api/users/refresh',
+	// 					payload: {
+	// 						refreshToken,
+	// 					},
+	// 				});
+	// 				console.log('responseRefreshData: ', responseRefreshData);
+
+	// 				const { token, refreshToken: newRefreshToken } =
+	// 					responseRefreshData.data;
+
+	// 				this.http.defaults.headers.common.Authorization = `Bearer ${token}`;
+	// 				this.setRefreshToken(newRefreshToken);
+	// 			}
+	// 		},
+	// 		this.expiredTokenSeconds * 1000 - 1000 * 60
+	// 	);
+	// };
 
 	private normalizeError(error: unknown) {
 		return Promise.reject(error);

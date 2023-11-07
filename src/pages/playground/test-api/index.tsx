@@ -1,10 +1,10 @@
-import api from '@/services/api';
+import { apiService } from '@/services';
 import { useEffect } from 'react';
 
 function PlaygroundTestApiPage() {
 	useEffect(() => {
 		(async () => {
-			const result = await api.getUsersMe();
+			const result = await apiService.getUsersMe();
 			console.log('result: ', result);
 		})();
 	}, []);
