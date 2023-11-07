@@ -4,15 +4,25 @@ const theme = {
 			100: '#FAFAFA',
 			200: '#F5F5F5',
 		},
+		red: {
+			100: '#ff0000',
+			200: '#fd0000',
+		},
+		blue: {
+			100: '#fff000',
+			200: '#F5F5F5',
+		},
 	},
 	semanticColor: {
 		light: {
 			background: '#FFFFFF',
 			primary: '#919191',
+			secondary: '#919191',
 		},
 		dark: {
 			background: '#171717',
 			primary: '#E8E8E8',
+			secondary: '#919191',
 		},
 	},
 	fontWeight: {

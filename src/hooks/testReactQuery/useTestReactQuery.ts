@@ -1,11 +1,14 @@
-import api from '@/services/api';
-import testReactQueryKeys from '@/services/queryKeys/testReactQuery';
+import { apiService } from '@/services';
 import { useQuery } from '@tanstack/react-query';
+
+const testReactQueryFactory = (id: string) => ({
+	queryKey: ['testReactQuery', id],
+	queryFn: () => apiService.getTestReactQuery({ id }),
+});
 
 const useTestReactQuery = ({ id }: { id: string }) => {
 	const { data } = useQuery({
-		queryKey: testReactQueryKeys.testReactQuery({ id }),
-		queryFn: () => api.getTestReactQuery({ id }),
+		...testReactQueryFactory(id),
 		throwOnError: true,
 	});
 
@@ -13,5 +16,7 @@ const useTestReactQuery = ({ id }: { id: string }) => {
 		data,
 	};
 };
+
+useTestReactQuery.queryFactory = (id: string) => testReactQueryFactory(id);
 
 export default useTestReactQuery;

@@ -5,7 +5,7 @@ import { ThemeMode } from '@/theme/sementicColor.theme';
  */
 export type CookieMap = {
 	theme: ThemeMode;
-	AccessToken?: string;
+	refreshToken: string;
 };
 
 export type CookieKey = keyof CookieMap;

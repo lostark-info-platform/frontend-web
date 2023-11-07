@@ -3,7 +3,6 @@ import type { AppContext, AppProps } from 'next/app';
 import '@/recoil/config';
 
 import { RecoilRoot } from 'recoil';
-import { extractFromCookie } from '@/theme/utils/cookie.util';
 import { ThemeMode } from '@/theme/sementicColor.theme';
 import {
 	darkModeSystemThemeSelector,
@@ -18,6 +17,7 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ErrorBoundary from '@/components/common/ErrorBoundary';
+import { cookieService } from '@/services';
 
 type AppRootProps = {
 	themeMode: ThemeMode | null;
@@ -69,11 +69,15 @@ export default function App({ Component, pageProps }: AppProps<AppRootProps>) {
 
 App.getInitialProps = async ({ Component, ctx }: AppContext) => {
 	let pageProps = {};
+
 	if (Component.getInitialProps) {
 		pageProps = await Component.getInitialProps(ctx);
 	}
 
-	const themeMode = extractFromCookie(ctx.req?.headers.cookie, 'theme');
+	const themeMode = cookieService.getItemFromSSR(
+		'theme',
+		ctx.req?.headers.cookie
+	);
 
 	return {
 		pageProps: {
