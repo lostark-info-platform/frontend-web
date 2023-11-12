@@ -1,4 +1,5 @@
-import { cookieService } from '@/services';
+// import cookieModule from '@/module/cookie/cookie.module';
+import cryptoModule from '@/module/crypto/crypto.module';
 
 class TokenService {
 	token: string | null = null;
@@ -11,25 +12,16 @@ class TokenService {
 
 	expiredRefreshTokenSeconds: number = 14 * 24 * 60 * 60;
 
-	constructor() {}
-
 	public setToken(token: string) {
 		this.token = token;
 	}
 
 	public getToken(): string | null {
-		return this.token;
+		return this.token && cryptoModule.decrypt(this.token);
 	}
 
-	public getRefreshToken(): string | null {
-		return cookieService.getItem('refreshToken');
-	}
-
-	public setRefreshToken(refreshToken: string) {
-		cookieService.setItem('refreshToken', refreshToken, {
-			secure: true,
-			maxAge: this.expiredRefreshTokenSeconds,
-		});
+	public encryptToken(token: string) {
+		return cryptoModule.encrypt(token);
 	}
 }
 

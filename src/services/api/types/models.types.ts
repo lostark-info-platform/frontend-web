@@ -35,3 +35,7 @@ export type ResponseUsersMe = {
 	email: string;
 	createdAt: string;
 };
+
+export type RequestUsersLogout = {
+	refreshToken: string;
+};

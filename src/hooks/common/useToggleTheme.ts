@@ -1,9 +1,9 @@
-import localStorage from '@/services/localStorage';
 import useTheme from './useTheme';
 import { ThemeMode } from '@/theme/sementicColor.theme';
 import { useSetRecoilState } from 'recoil';
 import { darkModeThemeSelector } from '@/recoil/common/darkMode';
-import { cookieService } from '@/services';
+import cookieModule from '@/module/cookie/cookie.module';
+import localStorageModule from '@/module/localStorage/localStorage.module';
 
 /**
  * @description 테마 토글 기능 및 로컬스토리지, 쿠키 저장 hook
@@ -13,8 +13,8 @@ const useToggleTheme = () => {
 	const setDarkModeTheme = useSetRecoilState(darkModeThemeSelector);
 
 	const save = (value: ThemeMode) => {
-		localStorage.setItem('theme', value); // CSR
-		cookieService.setItem('theme', value); // SSR
+		localStorageModule.setItem('theme', value); // CSR
+		cookieModule.setItem('theme', value); // SSR
 	};
 
 	const toggle = () => {

@@ -9,3 +9,10 @@ export type CookieMap = {
 };
 
 export type CookieKey = keyof CookieMap;
+
+export type SSRCookieOptionsType = {
+	'Max-Age': number;
+	Path: string;
+	HttpOnly?: boolean;
+	SameSite?: string;
+};

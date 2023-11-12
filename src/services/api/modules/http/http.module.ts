@@ -1,8 +1,14 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+	AxiosInstance,
+	AxiosRequestConfig,
+	AxiosResponse,
+	isAxiosError,
+} from 'axios';
 import getConfig from 'next/config';
-import type { HttpServiceMethods, HttpServiceParams } from './HttpService.type';
-import { ResponseUsersRefresh } from '../dataModels/dataModels.types';
-import { cookieService, tokenService } from '@/services';
+import type { HttpServiceMethods, HttpServiceParams } from './http.type';
+import { ResponseUsersRefresh } from '../../types/models.types';
+import { tokenService } from '@/services';
+import cookieModule from '@/module/cookie/cookie.module';
 
 /**
  * API 비동기 호출 Http 모듈
@@ -16,12 +22,15 @@ class HttpService {
 
 	private baseURL = publicRuntimeConfig.PUBLIC_API_BASE_URL;
 
+	private updateTokenApiList: string[];
+
 	constructor() {
 		this.http = axios.create({
 			baseURL: this.baseURL,
 			withCredentials: false,
 			headers: this.setupHeaders(),
 		});
+		this.updateTokenApiList = ['/api/users/login', '/api/users/register'];
 	}
 
 	private getAuthorization() {
@@ -29,9 +38,6 @@ class HttpService {
 		return token ? { Authorization: `Bearer ${token}` } : {};
 	}
 
-	/**
-	 * http service의 설정을 초기화합니다.
-	 */
 	service() {
 		this.injectInterceptors();
 		return this;
@@ -161,77 +167,51 @@ class HttpService {
 		this.http.interceptors.response.use(
 			(response) => {
 				const { config, data } = response;
-				const updateRefreshTokenCookieUrlList = [
-					'/api/users/login',
-					'/api/users/register',
-				];
+
 				const isUpdateRefreshTokenCookie =
 					config.method === 'post' &&
 					config.url &&
-					updateRefreshTokenCookieUrlList.some(
-						(url) => config.url === url
-					);
+					this.updateTokenApiList.some((url) => config.url === url);
 
 				if (isUpdateRefreshTokenCookie) {
 					const { token, refreshToken: newRefreshToken } =
 						data.data as ResponseUsersRefresh;
-					cookieService.setItem('refreshToken', newRefreshToken);
-					tokenService.setToken(token);
+					const encryptToken = tokenService.encryptToken(token);
+					if (encryptToken) {
+						cookieModule.setItem('refreshToken', newRefreshToken);
+						tokenService.setToken(encryptToken);
+					}
 				}
 
 				return response;
 			},
 
 			async (error) => {
-				console.log('error: ', error);
 				// * Implement a global error alert
 
-				if (
-					error?.response?.status === 401 ||
-					error?.response?.status === 403
-				) {
-					if (typeof window !== 'undefined') {
-						window.location.href = '/playground/user/login';
+				if (isAxiosError(error)) {
+					const { config } = error;
+					const isNotRedirectLoginApi =
+						config?.url &&
+						this.updateTokenApiList.some(
+							(url) => config.url === url
+						);
+
+					const isExpiredAuthenication =
+						error?.response?.status === 401 ||
+						error?.response?.status === 403;
+
+					if (!isNotRedirectLoginApi && isExpiredAuthenication) {
+						if (typeof window !== 'undefined') {
+							window.location.href = '/test-auth/login';
+						}
 					}
 				}
+
 				return Promise.reject(error);
 			}
 		);
 	}
-
-	// private clearSilentRefresh = () => {
-	// 	if (this.silentRefreshTimeoutId) {
-	// 		clearInterval(this.silentRefreshTimeoutId);
-	// 		this.silentRefreshTimeoutId = null;
-	// 	}
-	// };
-
-	// private updateSilentRefresh = async () => {
-	// 	this.silentRefreshTimeoutId = setTimeout(
-	// 		async () => {
-	// 			const refreshToken = this.getRefreshToken();
-	// 			if (refreshToken) {
-	// 				const responseRefreshData = await this.service().post<
-	// 					CommonApiResponse<ResponseUsersRefresh>,
-	// 					RequestUsersRefresh
-	// 				>({
-	// 					url: '/api/users/refresh',
-	// 					payload: {
-	// 						refreshToken,
-	// 					},
-	// 				});
-	// 				console.log('responseRefreshData: ', responseRefreshData);
-
-	// 				const { token, refreshToken: newRefreshToken } =
-	// 					responseRefreshData.data;
-
-	// 				this.http.defaults.headers.common.Authorization = `Bearer ${token}`;
-	// 				this.setRefreshToken(newRefreshToken);
-	// 			}
-	// 		},
-	// 		this.expiredTokenSeconds * 1000 - 1000 * 60
-	// 	);
-	// };
 
 	private normalizeError(error: unknown) {
 		return Promise.reject(error);

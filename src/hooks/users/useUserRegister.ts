@@ -1,5 +1,5 @@
 import { apiService } from '@/services';
-import { RequestUsersRegister } from '@/services/api/dataModels/dataModels.types';
+import { RequestUsersRegister } from '@/services/api/types/models.types';
 import { useMutation } from '@tanstack/react-query';
 
 const useUserRegister = () => {
