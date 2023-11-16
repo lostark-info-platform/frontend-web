@@ -4,7 +4,7 @@ import type {
 	ThemeColorPath,
 	ThemePalette,
 	ThemeSemanticColor,
-} from '@/types/color.type';
+} from '@/types/theme/color.type';
 
 /**
  * @description 컬러를 css 에서 사용할 때 해당 함수를 사용해주세요.

@@ -1,13 +1,22 @@
 import useUserLogin from '@/hooks/users/useUserLogin';
-import { RequestUsersLogin } from '@/services/api/dataModels/dataModels.types';
+import enhanceGetServerSideProps from '@/libs/next/enhanceGetServerSideProps';
+import { RequestUsersLogin } from '@/services/api/types/models.types';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-const PlaygroundUserLoginPage = () => {
+const TestAuthLoginPage = () => {
+	return (
+		<Wrapper>
+			<CredentialsSignin />
+		</Wrapper>
+	);
+};
+
+const CredentialsSignin = () => {
 	const router = useRouter();
 	const userLogin = useUserLogin();
-	const [userLoginForm, setUserLoginForm] = useState<RequestUsersLogin>({
+	const [userSigninForm, setUserSigninForm] = useState<RequestUsersLogin>({
 		email: '',
 		password: '',
 	});
@@ -16,7 +25,7 @@ const PlaygroundUserLoginPage = () => {
 		formKey: P,
 		value: RequestUsersLogin[P]
 	) => {
-		setUserLoginForm((prev) => ({
+		setUserSigninForm((prev) => ({
 			...prev,
 			[formKey]: value,
 		}));
@@ -27,40 +36,50 @@ const PlaygroundUserLoginPage = () => {
 		handleUserLoginForm(name as keyof RequestUsersLogin, value);
 	};
 
-	const handleClickLogin = () => {
-		userLogin.mutate(userLoginForm, {
-			onSuccess() {
-				alert('로그인 성공');
-				router.replace('/playground/user/me');
+	const handleSignin = (e: any) => {
+		e.preventDefault();
+		userLogin.mutate(
+			{
+				email: userSigninForm.email,
+				password: userSigninForm.password,
 			},
-			onError(error) {
-				console.error('error: ', error);
-			},
-		});
+			{
+				onSuccess() {
+					router.replace('/test-auth');
+				},
+			}
+		);
+		return false;
 	};
 	return (
-		<Wrapper>
+		<>
 			<Header>로그인</Header>
-			<Input
-				name='email'
-				type='email'
-				placeholder='email'
-				onChange={handleChangeFormInput}
-			/>
-			<Input
-				name='password'
-				type='password'
-				placeholder='password'
-				onChange={handleChangeFormInput}
-			/>
-			<Button onClick={handleClickLogin} disabled={userLogin.isPending}>
-				로그인하기
-			</Button>
-		</Wrapper>
+			<Form onSubmit={handleSignin}>
+				<Input
+					name='email'
+					type='email'
+					placeholder='email'
+					onChange={handleChangeFormInput}
+				/>
+				<Input
+					name='password'
+					type='password'
+					placeholder='password'
+					onChange={handleChangeFormInput}
+				/>
+				<Button type='submit'>로그인</Button>
+			</Form>
+		</>
 	);
 };
 
-export default PlaygroundUserLoginPage;
+export default TestAuthLoginPage;
+
+export const getServerSideProps = enhanceGetServerSideProps({
+	permissions: {
+		user: true,
+	},
+});
 
 const Wrapper = styled.div`
 	display: flex;
@@ -75,6 +94,11 @@ const Header = styled.h1`
 	font-weight: 600;
 	text-align: center;
 	color: #000;
+`;
+const Form = styled.form`
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 `;
 const Input = styled.input`
 	font-size: 16px;

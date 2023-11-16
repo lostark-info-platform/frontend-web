@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import themeTypography from '@/theme/typography.theme';
-import { ThemeTypogrpahyVariantSizeMap } from '@/types/typography.type';
+import { ThemeTypogrpahyVariantSizeMap } from '@/types/theme/typography.type';
 import { themeColorToObject } from '@/utils/common/theme.util';
-import { ThemeColorPath } from '@/types/color.type';
+import { ThemeColorPath } from '@/types/theme/color.type';
 
 type BodyProps = {
 	/** body의 사이즈 */

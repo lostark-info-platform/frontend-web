@@ -8,8 +8,8 @@ import {
 	darkModeSystemThemeSelector,
 	darkModeThemeSelector,
 } from '@/recoil/common/darkMode';
-import GlobalStyle from '@/theme/initializeComponents/GlobalStyle';
-import LoadThemeDarkMode from '@/theme/initializeComponents/LoadThemeDarkMode';
+import GlobalStyle from '@/theme/components/GlobalStyle';
+import LoadThemeDarkMode from '@/theme/components/LoadThemeDarkMode';
 import {
 	HydrationBoundary,
 	QueryClient,
@@ -17,14 +17,20 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ErrorBoundary from '@/components/common/ErrorBoundary';
-import { cookieService } from '@/services';
+import { tokenService } from '@/services';
+import cookieModule from '@/module/cookie/cookie.module';
 
 type AppRootProps = {
 	themeMode: ThemeMode | null;
 	dehydratedState: unknown;
+	token: string | null;
 };
 
 export default function App({ Component, pageProps }: AppProps<AppRootProps>) {
+	if (pageProps.token) {
+		tokenService.setToken(pageProps.token);
+	}
+
 	const [queryClient] = useState(
 		() =>
 			new QueryClient({
@@ -74,10 +80,7 @@ App.getInitialProps = async ({ Component, ctx }: AppContext) => {
 		pageProps = await Component.getInitialProps(ctx);
 	}
 
-	const themeMode = cookieService.getItemFromSSR(
-		'theme',
-		ctx.req?.headers.cookie
-	);
+	const themeMode = cookieModule.getSSRItem('theme')(ctx.req?.headers.cookie);
 
 	return {
 		pageProps: {

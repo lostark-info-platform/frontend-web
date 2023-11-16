@@ -1,6 +1,6 @@
 import type { LocalStorageMap, LocalStorageKey } from './localStorage.type';
 
-const localStorage = {
+const localStorageModule = {
 	getItem<P extends LocalStorageKey>(key: P): LocalStorageMap[P] | null {
 		const item = window.localStorage.getItem(key);
 		return item ? (JSON.parse(item) as LocalStorageMap[P]) : null;
@@ -16,4 +16,4 @@ const localStorage = {
 	},
 };
 
-export default localStorage;
+export default localStorageModule;

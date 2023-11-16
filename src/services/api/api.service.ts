@@ -1,4 +1,4 @@
-import { CommonApiResponse } from '../dataModels/commonApi.types';
+import { CommonApiResponse } from './types/commonApi.types';
 import {
 	RequestUsersLogin,
 	RequestUsersRefresh,
@@ -7,29 +7,11 @@ import {
 	ResponseUsersMe,
 	ResponseUsersRefresh,
 	ResponseUsersRegister,
-} from '../dataModels/dataModels.types';
-import HttpService from '../HttpService/HttpService.service';
+	RequestUsersLogout,
+} from './types/models.types';
+import HttpService from './modules/http/http.module';
 
 class ApiService extends HttpService {
-	getTestReactQuery(props: {
-		id: string;
-	}): Promise<{ testReactQuery: string }> {
-		const { id } = props ?? {};
-		return new Promise((reslove, reject) => {
-			setTimeout(() => {
-				if (!id) {
-					reject(
-						new Error(
-							'테스트 리엑트 쿼리 API에 id가 전달되지 않았습니다.'
-						)
-					);
-					return;
-				}
-				reslove({ testReactQuery: `테스트 리엑트 쿼리 ${id}` });
-			}, 1000);
-		});
-	}
-
 	/**
 	 * @description 회원가입
 	 */
@@ -72,6 +54,13 @@ class ApiService extends HttpService {
 	getUsersMe() {
 		return this.service().get<CommonApiResponse<ResponseUsersMe>>({
 			url: '/api/users/me',
+		});
+	}
+
+	postUsersLogout(payload: RequestUsersLogout) {
+		return this.service().post<any, any>({
+			url: '/api/users/logout',
+			payload,
 		});
 	}
 }

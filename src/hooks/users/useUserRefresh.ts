@@ -1,4 +1,5 @@
-import { apiService, cookieService } from '@/services';
+import cookieModule from '@/module/cookie/cookie.module';
+import { apiService } from '@/services';
 import { useQuery } from '@tanstack/react-query';
 
 const useUserRefresh = () => {
@@ -12,7 +13,7 @@ export default useUserRefresh;
 export const userRefreshQueryFactory = () => ({
 	queryKey: ['users/refresh'],
 	queryFn: async () => {
-		const refreshToken = cookieService.getItem('refreshToken');
+		const refreshToken = cookieModule.getItem('refreshToken');
 		if (refreshToken) {
 			const response = await apiService.postUsersRefresh({
 				refreshToken,
