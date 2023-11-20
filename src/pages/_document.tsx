@@ -45,6 +45,10 @@ class MyDocument extends Document<Props> {
 		return (
 			<Html lang='ko'>
 				<Head />
+				<meta
+					name='viewport'
+					content='width=device-width, initial-scale=1.0 user-scalable=no'
+				/>
 				<body {...bodyProps}>
 					<Main />
 					<NextScript />
