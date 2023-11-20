@@ -36,6 +36,8 @@ type StackProps = {
 	justifyContent?: StackJustifyContentVariant;
 	/** 콘텐츠 아이템 항목 사이와 주위 공간 분배 */
 	alignItems?: StackAlignItemsVariant;
+	width?: string;
+	height?: string;
 };
 
 const stackDirectionForMarginMap = {
@@ -46,7 +48,15 @@ const stackDirectionForMarginMap = {
 } as const;
 
 const Stack = styled.div<StackProps>`
-	${({ direction, margin, gap, justifyContent, alignItems }) => css`
+	${({
+		direction,
+		margin,
+		gap,
+		justifyContent,
+		alignItems,
+		width,
+		height,
+	}) => css`
 		display: flex;
 		flex-direction: ${direction};
 
@@ -77,6 +87,17 @@ const Stack = styled.div<StackProps>`
 			if (alignItems) {
 				return css`
 					align-items: ${alignItems};
+				`;
+			}
+
+			if (width) {
+				return css`
+					width: ${width};
+				`;
+			}
+			if (height) {
+				return css`
+					height: ${height};
 				`;
 			}
 		}}
