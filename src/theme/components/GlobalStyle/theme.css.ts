@@ -8,6 +8,11 @@ import localFont from 'next/font/local';
 const pretendardFont = localFont({
 	src: [
 		{
+			path: '../../../../public/assets/fonts/pretendard/woff2-subset/Pretendard-Bold.subset.woff2',
+			weight: '700',
+			style: 'normal',
+		},
+		{
 			path: '../../../../public/assets/fonts/pretendard/woff2-subset/Pretendard-SemiBold.subset.woff2',
 			weight: '600',
 			style: 'normal',
@@ -47,8 +52,8 @@ const themeCss = css`
 		line-height: 1.5;
 
 		/* 기본 배경/텍스트 색상을 설정 */
-		background: ${themeSementicColor.background};
-		color: ${themeSementicColor.primary};
+		/* background: ${themeSementicColor.background}; */
+		/* color: ${themeSementicColor.primary}; */
 	}
 
 	body {
