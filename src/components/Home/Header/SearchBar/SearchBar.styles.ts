@@ -10,8 +10,9 @@ export const SearchBarButton = styled.button`
 	border-radius: 8px;
 	font-size: 16px;
 	color: white;
-	background: #4569e3;
+	background: rgba(250, 250, 250, 1);
 	cursor: pointer;
+	color: rgba(153, 153, 153, 1);
 
 	border: 0;
 	outline: 0;

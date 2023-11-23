@@ -9,16 +9,21 @@ export const HomeWrapper = styled(AppContainer)`
 	background: #fbfbfb;
 `;
 
-export const HomeHeader = styled.header`
-	position: sticky;
+export const HomeHeader = styled(AppContainer)`
+	position: fixed;
 	width: 100%;
 	top: 0;
-	left: 0;
+	left: 50%;
+	transform: translateX(-50%);
 	z-index: 8888;
 `;
 
 export const HomeMain = styled.main`
 	width: 100%;
+	padding: 140px 0 85px;
+`;
+
+export const HomeContentWrapper = styled.div`
 	padding: 60px 0 80px;
 `;
 
@@ -43,11 +48,12 @@ export const HomeTitle = styled.h2`
 	color: #414141;
 `;
 
-export const HomeFooter = styled.footer`
-	margin-top: auto;
-	position: sticky;
+export const HomeFooter = styled(AppContainer)`
+	position: fixed;
+	width: 100%;
 	bottom: 0;
-	left: 0;
+	left: 50%;
+	transform: translateX(-50%);
 	z-index: 8888;
 `;
 

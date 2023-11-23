@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
-	background: #5578f0;
+	background: white;
 	border-radius: 0 0 8px 8px;
+	box-shadow: 0px 0px 4px 0 rgba(0, 0, 0, 0.04);
 `;
 
 export const HeaderTop = styled.div`
@@ -13,7 +14,7 @@ export const HeaderTop = styled.div`
 `;
 
 export const HeaderLogo = styled.h1`
-	color: white;
+	color: #4569e3;
 	font-size: 20px;
 	font-weight: 700;
 `;

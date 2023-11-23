@@ -1,4 +1,4 @@
-import AppBottomNavigation from '../app/AppBottomNavigation';
+import AppBottomNavigation from '../common/GlobalNavigationBar';
 import AppGutter from '../app/AppGutter';
 import Icon from '../common/Icon';
 import Spacing from '../common/Spacing';
@@ -8,6 +8,7 @@ import Header from './Header';
 import {
 	HomeAddScheduleButton,
 	HomeContentBox,
+	HomeContentWrapper,
 	HomeDivider,
 	HomeFooter,
 	HomeHeader,
@@ -25,21 +26,23 @@ const Home = () => {
 				<Header />
 			</HomeHeader>
 			<HomeMain>
-				<AppGutter>
-					<CalendarHeader />
-					<Spacing size={12} />
-					<HomeContentBox>
-						<CalendarDaysIndicator />
-						<HomeDivider />
-						<HomeTitle>공식 일정</HomeTitle>
+				<HomeContentWrapper>
+					<AppGutter>
+						<CalendarHeader />
 						<Spacing size={12} />
-						<OfficialScheduleList />
-						<HomeDivider />
-						<HomeTitle>내가 쓴 일정</HomeTitle>
-						<Spacing size={12} />
-						<ScheduleList />
-					</HomeContentBox>
-				</AppGutter>
+						<HomeContentBox>
+							<CalendarDaysIndicator />
+							<HomeDivider />
+							<HomeTitle>공식 일정</HomeTitle>
+							<Spacing size={12} />
+							<OfficialScheduleList />
+							<HomeDivider />
+							<HomeTitle>내가 쓴 일정</HomeTitle>
+							<Spacing size={12} />
+							<ScheduleList />
+						</HomeContentBox>
+					</AppGutter>
+				</HomeContentWrapper>
 			</HomeMain>
 			<HomeFooter>
 				<HomeAddScheduleButton>
