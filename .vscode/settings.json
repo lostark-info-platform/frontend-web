@@ -4,5 +4,7 @@
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	// INFO: 수정 후 저장할 때 eslint로 autofix 실행 (ex. let => const)
-	"editor.codeActionsOnSave": { "source.fixAll.eslint": true }
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	}
 }

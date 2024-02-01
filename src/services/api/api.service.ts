@@ -1,52 +1,26 @@
 import { CommonApiResponse } from './types/commonApi.types';
 import {
-	RequestUsersLogin,
-	RequestUsersRefresh,
-	RequestUsersRegister,
-	ResponseUsersLogin,
+	RequestAuthRefresh,
 	ResponseUsersMe,
-	ResponseUsersRefresh,
-	ResponseUsersRegister,
-	RequestUsersLogout,
+	ResponseAuthRefresh,
+	OAuth2Providers,
+	ResponseOAuth2Login,
+	RequestOAuth2Login,
+	RequestConfigClientBaseUrl,
+	ResponseSchedules,
 } from './types/models.types';
 import HttpService from './modules/http/http.module';
 
 class ApiService extends HttpService {
 	/**
-	 * @description 회원가입
-	 */
-	postUsersRegister(payload: RequestUsersRegister) {
-		return this.service().post<
-			CommonApiResponse<ResponseUsersRegister>,
-			RequestUsersRegister
-		>({
-			url: '/api/users/register',
-			payload,
-		});
-	}
-
-	/**
-	 * @description 로그인
-	 */
-	postUsersLogin(payload: RequestUsersLogin) {
-		return this.service().post<
-			CommonApiResponse<ResponseUsersLogin>,
-			RequestUsersLogin
-		>({
-			url: '/api/users/login',
-			payload,
-		});
-	}
-
-	/**
 	 * @description 토큰 갱신
 	 */
-	postUsersRefresh(payload: RequestUsersRefresh) {
+	postAuthRefresh(payload: RequestAuthRefresh) {
 		return this.service().post<
-			CommonApiResponse<ResponseUsersRefresh>,
-			RequestUsersRefresh
+			CommonApiResponse<ResponseAuthRefresh>,
+			RequestAuthRefresh
 		>({
-			url: '/api/users/refresh',
+			url: '/api/auth/refresh',
 			payload,
 		});
 	}
@@ -57,10 +31,44 @@ class ApiService extends HttpService {
 		});
 	}
 
-	postUsersLogout(payload: RequestUsersLogout) {
+	postAuthLogout() {
 		return this.service().post<any, any>({
-			url: '/api/users/logout',
-			payload,
+			url: '/api/auth/logout',
+			payload: null,
+		});
+	}
+
+	/**
+	 * @description 로그인 성공
+	 */
+	async postOAuth2Login(provider: OAuth2Providers, code: string) {
+		return this.post<
+			CommonApiResponse<ResponseOAuth2Login>,
+			RequestOAuth2Login
+		>({
+			url: '/oauth2/login',
+			payload: {
+				provider,
+				code,
+			},
+		});
+	}
+
+	postConfigClientBaseUrl(url: string) {
+		return this.service().post<
+			CommonApiResponse<null>,
+			RequestConfigClientBaseUrl
+		>({
+			url: '/config/clientBaseUrl',
+			payload: {
+				url,
+			},
+		});
+	}
+
+	getSchedules() {
+		return this.service().get<CommonApiResponse<ResponseSchedules>>({
+			url: '/api/schedules',
 		});
 	}
 }

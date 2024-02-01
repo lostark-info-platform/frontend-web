@@ -6,9 +6,6 @@ import axios, {
 } from 'axios';
 import getConfig from 'next/config';
 import type { HttpServiceMethods, HttpServiceParams } from './http.type';
-import { ResponseUsersRefresh } from '../../types/models.types';
-import { tokenService } from '@/services';
-import cookieModule from '@/module/cookie/cookie.module';
 
 /**
  * API 비동기 호출 Http 모듈
@@ -30,12 +27,14 @@ class HttpService {
 			withCredentials: false,
 			headers: this.setupHeaders(),
 		});
-		this.updateTokenApiList = ['/api/users/login', '/api/users/register'];
+		this.updateTokenApiList = ['/oauth2/login', '/api/auth/refresh'];
 	}
 
 	private getAuthorization() {
-		const token = tokenService.getToken();
-		return token ? { Authorization: `Bearer ${token}` } : {};
+		const accessToken =
+			'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAyMTQxMTQ1LCJleHAiOjE3MDIxNDQ3NDV9.e4F8kh-fuJY7q--KyQdgF8Jrww-cMO-55AG6pRI270U';
+		// const accessToken = tokenService.getAccessToken();
+		return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
 	}
 
 	service() {
@@ -166,22 +165,32 @@ class HttpService {
 
 		this.http.interceptors.response.use(
 			(response) => {
-				const { config, data } = response;
+				// const { config, data } = response;
 
-				const isUpdateRefreshTokenCookie =
-					config.method === 'post' &&
-					config.url &&
-					this.updateTokenApiList.some((url) => config.url === url);
+				// const isUpdateToken =
+				// 	config.method === 'post' &&
+				// 	config.url &&
+				// 	this.updateTokenApiList.some((url) => config.url === url);
+				// console.log('isUpdateToken: ', isUpdateToken);
 
-				if (isUpdateRefreshTokenCookie) {
-					const { token, refreshToken: newRefreshToken } =
-						data.data as ResponseUsersRefresh;
-					const encryptToken = tokenService.encryptToken(token);
-					if (encryptToken) {
-						cookieModule.setItem('refreshToken', newRefreshToken);
-						tokenService.setToken(encryptToken);
-					}
-				}
+				// if (isUpdateToken) {
+				// 	const { accessToken, refreshToken: newRefreshToken } =
+				// 		data.data as ResponseOAuth2Login;
+
+				// 	const encryptToken = tokenService.encryptToken(accessToken);
+
+				// 	if (encryptToken) {
+				// 		if (typeof window === 'undefined') {
+				// 			cookieModule.setItem(
+				// 				'refreshToken',
+				// 				newRefreshToken
+				// 			);
+				// 		} else {
+				// 			console.log('csr: ', newRefreshToken);
+				// 		}
+				// 		tokenService.setAccessToken(encryptToken);
+				// 	}
+				// }
 
 				return response;
 			},
@@ -190,20 +199,20 @@ class HttpService {
 				// * Implement a global error alert
 
 				if (isAxiosError(error)) {
-					const { config } = error;
-					const isNotRedirectLoginApi =
-						config?.url &&
-						this.updateTokenApiList.some(
-							(url) => config.url === url
-						);
+					// const isNotRedirectLoginApi =
+					// 	config?.url &&
+					// 	this.updateTokenApiList.some(
+					// 		(url) => config.url === url
+					// 	);
 
 					const isExpiredAuthenication =
 						error?.response?.status === 401 ||
 						error?.response?.status === 403;
 
-					if (!isNotRedirectLoginApi && isExpiredAuthenication) {
+					if (isExpiredAuthenication) {
 						if (typeof window !== 'undefined') {
-							window.location.href = '/test-auth/login';
+							// window.location.href = '/auth/login';
+							// return Promise.reject(error);
 						}
 					}
 				}
