@@ -23,12 +23,12 @@ import cookieModule from '@/module/cookie/cookie.module';
 type AppRootProps = {
 	themeMode: ThemeMode | null;
 	dehydratedState: unknown;
-	token: string | null;
+	encryptAccessToken?: string | null;
 };
 
 export default function App({ Component, pageProps }: AppProps<AppRootProps>) {
-	if (pageProps.token) {
-		tokenService.setToken(pageProps.token);
+	if (pageProps.encryptAccessToken) {
+		tokenService.setEncryptAccessToken(pageProps.encryptAccessToken);
 	}
 
 	const [queryClient] = useState(
