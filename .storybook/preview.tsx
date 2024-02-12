@@ -1,7 +1,7 @@
 import React from 'react';
 
-import GlobalStyle from '../src/theme/initializeComponents/GlobalStyle';
-import LoadThemeDarkMode from '../src/theme/initializeComponents/LoadThemeDarkMode';
+import GlobalStyle from '../src/theme/components/GlobalStyle';
+import LoadThemeDarkMode from '../src/theme/components/LoadThemeDarkMode';
 import { Preview } from '@storybook/react';
 import { RecoilRoot } from 'recoil';
 
