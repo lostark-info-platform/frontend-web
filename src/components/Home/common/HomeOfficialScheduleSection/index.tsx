@@ -6,7 +6,7 @@ import Spacing from '@/components/common/Spacing';
 
 type OfficialScheduleTabIds = 'contents' | 'raid';
 
-const defaultTabId: OfficialScheduleTabIds = 'raid';
+const defaultTabId: OfficialScheduleTabIds = 'contents';
 
 function HomeOfficialScheduleSection() {
 	const [currentTabId, setCurrentTabId] =

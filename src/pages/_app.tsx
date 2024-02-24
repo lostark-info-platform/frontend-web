@@ -62,6 +62,7 @@ export default function App({ Component, pageProps }: AppProps<AppRootProps>) {
 						<GlobalStyle />
 						<LoadThemeDarkMode />
 						<Component {...pageProps} />
+						<div id='modal-root' />
 					</RecoilRoot>
 					<ReactQueryDevtools
 						initialIsOpen={false}

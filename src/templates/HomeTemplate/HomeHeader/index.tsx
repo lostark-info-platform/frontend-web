@@ -4,7 +4,7 @@ import {
 	HomeHeaderWrapper,
 } from './HomeHeader.styles';
 import Avatar from '@/components/common/Avatar';
-import AppGutter from '@/components/app/AppGutter';
+import AppGutter from '@/components/common/AppGutter';
 import SearchBar from './SearchBar';
 import Image from 'next/image';
 

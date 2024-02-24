@@ -1,5 +1,5 @@
 import AppBottomNavigation from '../common/GlobalNavigationBar';
-import AppGutter from '../app/AppGutter';
+import AppGutter from '../common/AppGutter';
 import Icon from '../common/Icon';
 import Spacing from '../common/Spacing';
 import CalendarDaysIndicator from './CalendarDaysIndicator';

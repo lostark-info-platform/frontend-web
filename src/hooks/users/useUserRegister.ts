@@ -1,5 +1,5 @@
-import { apiService } from '@/services';
-import { RequestUsersRegister } from '@/services/api/types/models.types';
+// import { apiService } from '@/services';
+// import { RequestUsersRegister } from '@/services/api/types/models.types';
 import { useMutation } from '@tanstack/react-query';
 
 const useUserRegister = () => {
@@ -12,8 +12,8 @@ export default useUserRegister;
 
 export const userRegisterMutationFactory = () => ({
 	mutationKey: ['users/register'],
-	mutationFn: async (payload: RequestUsersRegister) => {
-		const response = await apiService.postUsersRegister(payload);
-		return response.data;
+	mutationFn: async () => {
+		// const response = await apiService.postUsersRegister(payload);
+		// return response.data;
 	},
 });

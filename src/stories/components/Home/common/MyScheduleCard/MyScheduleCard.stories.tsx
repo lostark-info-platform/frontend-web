@@ -8,6 +8,8 @@ const meta = {
 
 export default meta;
 
-const Template: StoryFn<typeof MyScheduleCard> = () => <MyScheduleCard />;
+const Template: StoryFn<typeof MyScheduleCard> = () => (
+	<MyScheduleCard id='test' />
+);
 
 export const Default = Template.bind({});

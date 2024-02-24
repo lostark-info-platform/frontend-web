@@ -1,4 +1,4 @@
-import AppContainer from '@/components/app/AppContainer';
+import AppContainer from '@/components/common/AppContainer';
 import styled from 'styled-components';
 
 export const HomeTemplateWrapper = styled(AppContainer)`

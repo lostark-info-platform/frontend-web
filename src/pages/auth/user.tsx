@@ -2,9 +2,7 @@ import withAuthSSR from '@/libs/next/withAuthSSR';
 import { apiService, tokenService } from '@/services';
 import { useEffect } from 'react';
 
-const AuthUserPage = (props) => {
-	console.log('props: ', props);
-
+const AuthUserPage = () => {
 	useEffect(() => {
 		(async () => {
 			console.log(tokenService.getAccessToken());

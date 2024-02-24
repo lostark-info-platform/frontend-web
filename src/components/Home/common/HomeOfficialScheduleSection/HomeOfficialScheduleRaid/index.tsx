@@ -12,6 +12,8 @@ import {
 	OfficialScheduleRaidTotalRewardBox,
 } from './HomeOfficialScheduleRaid.styles';
 import Icon from '@/components/common/Icon';
+import { useState } from 'react';
+import HomeOfficialScheduleRaidModal from '../../HomeOfficialScheduleRaidModal';
 
 type OfficialScheduleRaid = {
 	thumbnail: string;
@@ -20,6 +22,7 @@ type OfficialScheduleRaid = {
 	reward: number;
 };
 function HomeOfficialScheduleRaid() {
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const officialScheduleRaidList: OfficialScheduleRaid[] = [
 		{
 			thumbnail:
@@ -68,8 +71,24 @@ function HomeOfficialScheduleRaid() {
 		<HomeOfficialScheduleRaidWrapper>
 			<OfficialScheduleRaidTotalReward />
 			{officialScheduleRaidList.map((item, index) => (
-				<OfficialScheduleRaidItem key={index} {...item} />
+				<OfficialScheduleRaidItem
+					key={index}
+					onClick={() => {
+						setIsModalOpen(true);
+					}}
+					{...item}
+				/>
 			))}
+			{isModalOpen && (
+				<HomeOfficialScheduleRaidModal
+					onCancle={() => {
+						setIsModalOpen(false);
+					}}
+					onSave={() => {
+						setIsModalOpen(false);
+					}}
+				/>
+			)}
 		</HomeOfficialScheduleRaidWrapper>
 	);
 }
@@ -94,17 +113,20 @@ function OfficialScheduleRaidTotalReward() {
 	);
 }
 
-type OfficialScheduleRaidItemProps = OfficialScheduleRaid;
+type OfficialScheduleRaidItemProps = OfficialScheduleRaid & {
+	onClick: () => void;
+};
 
 function OfficialScheduleRaidItem({
 	thumbnail,
 	nickname,
 	subText,
 	reward,
+	onClick,
 }: OfficialScheduleRaidItemProps) {
 	const nf = new Intl.NumberFormat();
 	return (
-		<OfficialScheduleRaidItemWrapper>
+		<OfficialScheduleRaidItemWrapper onClick={onClick}>
 			<Flex gap={16} alignItems='center'>
 				<OfficialScheduleRaidItemThumbnail
 					src={thumbnail}

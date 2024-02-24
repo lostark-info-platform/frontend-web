@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import AppContainer from '../app/AppContainer';
+import AppContainer from '../common/AppContainer';
 
 export const HomeWrapper = styled(AppContainer)`
 	position: relative;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import AppGutter from '../../app/AppGutter';
+import AppGutter from '../AppGutter';
 
 export const GlobalNavigationBarWrapper = styled.div`
 	width: 100%;

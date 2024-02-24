@@ -30,11 +30,15 @@ export const OfficialScheduleRaidTotalRewardText = styled.p`
 	color: #414141;
 `;
 
-export const OfficialScheduleRaidItemWrapper = styled.div`
+export const OfficialScheduleRaidItemWrapper = styled.button`
+	display: inline-block;
+	width: 100%;
+	text-align: left;
 	padding: 16px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	cursor: pointer;
 `;
 
 export const OfficialScheduleRaidItemThumbnail = styled(Image)`

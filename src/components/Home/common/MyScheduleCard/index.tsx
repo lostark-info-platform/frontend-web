@@ -10,7 +10,10 @@ import {
 } from './MyScheduleCard.styles';
 import Flex from '@/components/common/Flex';
 
-const MyScheduleCard = () => {
+type MyScheduleCardProps = {
+	id: string;
+};
+const MyScheduleCard = ({ id }: MyScheduleCardProps) => {
 	return (
 		<MyScheduleCardWrapper>
 			<Flex
@@ -41,7 +44,7 @@ const MyScheduleCard = () => {
 						</Flex>
 					</MyScheduleCardContent>
 				</Flex>
-				<Checkbox id='my' />
+				<Checkbox id={id} />
 			</Flex>
 		</MyScheduleCardWrapper>
 	);
