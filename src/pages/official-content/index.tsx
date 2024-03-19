@@ -1,7 +1,7 @@
-import OfficialContentView from '@/components/OfficialContent';
+import OfficialContent from '@/components/OfficialContent';
 
 function OfficialContentPage() {
-	return <OfficialContentView />;
+	return <OfficialContent />;
 }
 
 export default OfficialContentPage;
