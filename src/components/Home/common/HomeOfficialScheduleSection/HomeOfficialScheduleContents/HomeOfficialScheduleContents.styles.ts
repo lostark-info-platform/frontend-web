@@ -12,6 +12,7 @@ export const OfficialScheduleContentsItemWrapper = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	cursor: pointer;
 `;
 export const OfficialScheduleContentsItemThumbnail = styled(Image)`
 	border-radius: 4px;

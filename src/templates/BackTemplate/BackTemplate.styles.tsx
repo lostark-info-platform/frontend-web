@@ -17,6 +17,7 @@ export const BackTemplateHeaderWrapper = styled(AppContainer)`
 	left: 50%;
 	top: 0;
 	transform: translateX(-50%);
+	padding: 0 16px;
 `;
 
 export const BackTemplateHeaderBackButton = styled.button`

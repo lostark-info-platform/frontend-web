@@ -26,6 +26,7 @@ function OfficialContentView() {
 			}}
 		>
 			<AppGutter>
+				<Spacing size={12} />
 				<OfficialContentTitle>콘텐츠 전체보기</OfficialContentTitle>
 				<Spacing size={12} />
 				<Tabs

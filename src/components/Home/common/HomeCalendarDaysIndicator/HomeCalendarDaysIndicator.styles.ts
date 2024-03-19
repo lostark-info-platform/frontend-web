@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const HomeCalendarDaysIndicatorTitle = styled.p`
+	color: #414141;
+	font-size: 20px;
+	font-weight: 700;
+`;
+
 export const HomeCalendarDaysIndicatorWrapper = styled.div`
 	border-top: 1px solid #ececec;
 	border-bottom: 1px solid #ececec;

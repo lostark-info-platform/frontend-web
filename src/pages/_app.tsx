@@ -17,7 +17,6 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ErrorBoundary from '@/components/common/ErrorBoundary';
-import { tokenService } from '@/services';
 import cookieModule from '@/module/cookie/cookie.module';
 
 type AppRootProps = {
@@ -27,10 +26,6 @@ type AppRootProps = {
 };
 
 export default function App({ Component, pageProps }: AppProps<AppRootProps>) {
-	if (pageProps.encryptAccessToken) {
-		tokenService.setEncryptAccessToken(pageProps.encryptAccessToken);
-	}
-
 	const [queryClient] = useState(
 		() =>
 			new QueryClient({

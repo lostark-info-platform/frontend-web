@@ -20,7 +20,7 @@ export const HomeTemplateHeader = styled(AppContainer)`
 
 export const HomeTemplateMain = styled.main`
 	width: 100%;
-	padding: 140px 0 85px;
+	padding: 56px 0 85px;
 `;
 
 export const HomeTemplateContentWrapper = styled.div`

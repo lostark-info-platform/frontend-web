@@ -10,6 +10,7 @@ import {
 	ResponseSchedules,
 } from './types/models.types';
 import HttpService from './modules/http/http.module';
+import { HttpServiceParams } from './modules/http/http.type';
 
 class ApiService extends HttpService {
 	/**
@@ -69,6 +70,14 @@ class ApiService extends HttpService {
 	getSchedules() {
 		return this.service().get<CommonApiResponse<ResponseSchedules>>({
 			url: '/api/schedules',
+		});
+	}
+
+	/** @description 오피셜 스케줄 요약 조회 */
+	getOfficialSummary(params?: HttpServiceParams) {
+		return this.service().get<CommonApiResponse<ResponseSchedules>>({
+			url: '/api/official/summary',
+			params,
 		});
 	}
 }

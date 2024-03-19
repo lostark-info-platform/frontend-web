@@ -24,7 +24,7 @@ const AuthLoginPage = () => {
 				}}
 				href={getOAuth2Code({
 					provider: 'kakao',
-					redirectTo: '/auth/user',
+					redirectTo: '/',
 				})}
 			>
 				카카오

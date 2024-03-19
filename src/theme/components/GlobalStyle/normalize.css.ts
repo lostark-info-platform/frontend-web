@@ -9,6 +9,7 @@ const normalizeCss = css`
 		outline: 0;
 		background: transparent;
 		border: 0;
+		padding: 0;
 		cursor: pointer;
 	}
 `;

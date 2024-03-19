@@ -7,6 +7,7 @@ import {
 	OfficialScheduleContentsItemTitle,
 } from './HomeOfficialScheduleContents.styles';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
 
 type OfficialScheduleContents = {
 	thumbnail: string;
@@ -79,8 +80,13 @@ function OfficialScheduleContentsItem({
 	// time,
 	isComplete,
 }: OfficialScheduleContentsItemProps) {
+	const router = useRouter();
 	return (
-		<OfficialScheduleContentsItemWrapper>
+		<OfficialScheduleContentsItemWrapper
+			onClick={() => {
+				router.push('/official-content');
+			}}
+		>
 			<Flex gap={16} alignItems='center'>
 				<OfficialScheduleContentsItemThumbnail
 					src={thumbnail}

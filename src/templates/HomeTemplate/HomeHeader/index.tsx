@@ -1,11 +1,6 @@
-import {
-	HomeHeaderBottom,
-	HomeHeaderTop,
-	HomeHeaderWrapper,
-} from './HomeHeader.styles';
+import { HomeHeaderTop, HomeHeaderWrapper } from './HomeHeader.styles';
 import Avatar from '@/components/common/Avatar';
 import AppGutter from '@/components/common/AppGutter';
-import SearchBar from './SearchBar';
 import Image from 'next/image';
 
 const HomeHeader = () => {
@@ -21,9 +16,6 @@ const HomeHeader = () => {
 					/>
 					<Avatar src='/assets/mock-images/mock-profile.png' />
 				</HomeHeaderTop>
-				<HomeHeaderBottom>
-					<SearchBar />
-				</HomeHeaderBottom>
 			</AppGutter>
 		</HomeHeaderWrapper>
 	);

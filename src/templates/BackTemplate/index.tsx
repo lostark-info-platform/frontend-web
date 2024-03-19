@@ -5,8 +5,7 @@ import {
 	BackTemplateWrapper,
 } from './BackTemplate.styles';
 import { PropsWithChildren } from 'react';
-import Image from 'next/image';
-import AppGutter from '@/components/common/AppGutter';
+import Icon from '@/components/common/Icon';
 
 type BackTemplateProps = {
 	onBack?: () => void;
@@ -18,16 +17,9 @@ function BackTemplate({
 	return (
 		<BackTemplateWrapper>
 			<BackTemplateHeaderWrapper as={'header'}>
-				<AppGutter>
-					<BackTemplateHeaderBackButton onClick={() => onBack?.()}>
-						<Image
-							src={'/assets/common/back.svg'}
-							width={11}
-							height={22}
-							alt='back'
-						/>
-					</BackTemplateHeaderBackButton>
-				</AppGutter>
+				<BackTemplateHeaderBackButton onClick={() => onBack?.()}>
+					<Icon variant='ChevronLeft' size={24} />
+				</BackTemplateHeaderBackButton>
 			</BackTemplateHeaderWrapper>
 			<BackTemplateMain>{children}</BackTemplateMain>
 		</BackTemplateWrapper>
