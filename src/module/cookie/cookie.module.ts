@@ -34,9 +34,9 @@ const cookieModule = {
 			options?: SSRCookieOptionsType
 		) =>
 		(
-			setCookieHandler: (
+			appendHeaderHandlers: (
 				name: string,
-				value: string | number | readonly string[]
+				value: string | readonly string[]
 			) => ServerResponse<IncomingMessage>
 		) => {
 			const cookieOptions = {
@@ -48,7 +48,7 @@ const cookieModule = {
 			};
 			const getCookieOptionsString =
 				convertOptionsToCookieString(cookieOptions);
-			setCookieHandler(
+			appendHeaderHandlers(
 				'set-cookie',
 				`${key}=${value}; ${getCookieOptionsString}'`
 			);
@@ -70,6 +70,7 @@ const cookieModule = {
 
 export default cookieModule;
 
+/** @description 쿠키의 옵션 객체를 string 형태로 반환합니다. */
 function convertOptionsToCookieString(options: SSRCookieOptionsType) {
 	const cookieString = [];
 

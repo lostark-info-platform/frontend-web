@@ -6,6 +6,7 @@ import axios, {
 } from 'axios';
 import getConfig from 'next/config';
 import type { HttpServiceMethods, HttpServiceParams } from './http.type';
+import cookieModule from '@/module/cookie/cookie.module';
 
 /**
  * API 비동기 호출 Http 모듈
@@ -31,9 +32,7 @@ class HttpService {
 	}
 
 	private getAuthorization() {
-		const accessToken =
-			'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzAyMTQxMTQ1LCJleHAiOjE3MDIxNDQ3NDV9.e4F8kh-fuJY7q--KyQdgF8Jrww-cMO-55AG6pRI270U';
-		// const accessToken = tokenService.getAccessToken();
+		const accessToken = cookieModule.getItem('accessToken');
 		return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
 	}
 
@@ -89,8 +88,8 @@ class HttpService {
 			method: 'GET',
 			url,
 			options: {
-				params,
 				headers: this.setupHeaders(hasAttachment),
+				params,
 			},
 		});
 	}
